@@ -1,0 +1,7 @@
+package Exceptions;
+
+public class WrongNumberOfArgs extends Exception {
+    public WrongNumberOfArgs (String msg) {
+        super(msg);
+    }
+}
