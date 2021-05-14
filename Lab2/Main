@@ -1,0 +1,10 @@
+public class Main {
+    public static void main(String[] args) {
+        Workflow workflow = new Workflow();
+        try {
+            workflow.workflowWorks("src/workflow.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
