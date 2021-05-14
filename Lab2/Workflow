@@ -1,0 +1,52 @@
+import option.Option;
+import option.*;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import Exceptions.*;
+
+public class Workflow {
+    static Logger logger = Logger.getLogger(Workflow.class.getName());
+
+    public void workflowWorks(String fileName) throws Exception {
+        ArrayList<String> text = new ArrayList<>();
+        Parser parser = new Parser();
+
+        try {
+            parser.parseFile(fileName);
+        } catch (Exception ex) {
+            logger.log(Level.WARNING, "There are some roubles with parsing");
+            throw new Exception("There are some troubles with parsing");
+        }
+
+        Map<String, Vector<String>> options = parser.getOptions();
+        Vector<String> sequence = parser.getSequence();   
+
+        for (int i = 0; i < sequence.size(); i++) {
+            String OptionName = options.get(sequence.get(i)).get(0);
+            Vector<String> array = new Vector<>();
+
+            for (int j = 1; j < options.get(sequence.get(i)).size(); j++){
+                array.add(options.get(sequence.get(i)).get(j));
+            }
+
+            Option option = OptionFactory.getInstance().getOption(OptionName); 
+
+            if (i == 0 && option.getType() != OptionType.IN_TYPE) {
+                logger.log(Level.WARNING, "Wrong sequence because of first do is in action");
+                throw new IncorrectSequence("Wrong sequence");
+            }
+            if (i == options.size() - 1 && option.getType() != OptionType.OUT_TYPE) {
+                logger.log(Level.WARNING, "Wrong  sequence because of last do is out action");
+                throw new IncorrectSequence("Wrong  sequence");
+            }
+            try {
+                option.execute(text, array);
+            } catch (Exception ex) {
+                logger.log(Level.WARNING, "There are some troubles with executing");
+                throw new Exception("There are some troubles with executing");
+            }
+        }
+    }
+
+}
