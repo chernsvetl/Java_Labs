@@ -8,7 +8,6 @@ import Exceptions.*;
 
 public class OptionFactory {
     static Logger logger = Logger.getLogger(OptionFactory.class.getName());
-    private static OptionFactory Factory = null;
     private final Properties properties = new Properties();  
 
 
@@ -22,11 +21,16 @@ public class OptionFactory {
     }
 
 
+   private static volatile OptionFactory instance;
     public static OptionFactory getInstance() throws IOException{
-        if (Factory == null){  
-            Factory = new OptionFactory();
+        if (instance == null){
+            synchronized (OptionFactory.class) {
+                if (instance == null){
+                    instance = new OptionFactory();
+                }
+            }
         }
-        return Factory;
+        return instance;
     }
 
     public Option getOption(String optionName) throws Exception{
