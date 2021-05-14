@@ -1,0 +1,24 @@
+package option;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import Exceptions.*;
+
+public class Sort implements Option{
+    static Logger logger = Logger.getLogger(Sort.class.getName());
+
+    public void execute(ArrayList<String> text, Vector<String> args) throws Exception {
+        logger.info("Beginning..");
+        if (args.size() != 0) {
+            logger.log(Level.WARNING, "Number of arguments for sort isn't 1");
+            throw new WrongNumberOfArgs("Number of arguments for sort isn't 1");
+        }
+        text.sort(String::compareTo);
+        logger.info("Job successful");
+    }
+
+    public OptionType getType() {
+        return OptionType.IN_OUT_TYPE;
+
+    }
+}
