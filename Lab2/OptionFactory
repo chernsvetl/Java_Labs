@@ -1,0 +1,49 @@
+import option.Option;
+import java.io.InputStream;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.io.IOException;
+import Exceptions.*;
+
+public class OptionFactory {
+    static Logger logger = Logger.getLogger(OptionFactory.class.getName());
+    private static OptionFactory Factory = null;
+    private final Properties properties = new Properties();  
+
+
+    private OptionFactory() throws IOException {
+        InputStream InputStream = OptionFactory.class.getResourceAsStream("OptionFactory.config");
+        if (InputStream == null){
+            logger.log(Level.WARNING, "Can't  read configuration file");
+            throw new IOException("Can't read configuration file");
+        }
+        properties.load(InputStream);
+    }
+
+
+    public static OptionFactory getInstance() throws IOException{
+        if (Factory == null){  
+            Factory = new OptionFactory();
+        }
+        return Factory;
+    }
+
+    public Option getOption(String optionName) throws Exception{
+        if (!properties.containsKey(optionName)){  
+            logger.log(Level.WARNING, "Option not found");
+            throw new OptionNotFound("Option not found");
+        }
+
+        Option option;
+        try {
+            Class<?> optionClass = Class.forName(properties.getProperty(optionName));
+            Object  optionObject = optionClass.getDeclaredConstructor().newInstance();
+            option = (Option) optionObject;
+        } catch (Exception ex){
+            logger.log(Level.WARNING, "Can't create option");
+            throw  new Exception("Can't create option");
+        }
+        return option;
+    }
+}
