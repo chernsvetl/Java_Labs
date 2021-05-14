@@ -1,0 +1,32 @@
+package option;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import Exceptions.*;
+
+public class Replace implements Option{
+    static Logger logger = Logger.getLogger(Sort.class.getName());
+
+    public void execute(ArrayList<String> text, Vector<String> args) throws Exception {
+
+        logger.info("Beginning..");
+        if (args.size() != 2) {
+            logger.log(Level.WARNING, "Number of arguments for replace isn't 2");
+            throw new WrongNumberOfArgs("Number of arguments for replace isn't 2");
+        }
+        String word1, word2;
+         word1 = args.get(0);
+         word2 = args.get(1);
+        for (int i = 0; i < text.size(); i++){
+            String CurStr = text.get(i);
+            CurStr = CurStr.replaceAll(word1, word2);
+            text.set(i, CurStr);
+        }
+        logger.info("Job successful");
+    }
+
+    public OptionType getType() {
+        return OptionType.IN_OUT_TYPE;
+
+    }
+}
