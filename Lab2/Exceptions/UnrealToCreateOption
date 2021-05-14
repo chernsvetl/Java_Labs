@@ -1,0 +1,7 @@
+package Exceptions;
+
+public class UnrealToCreateOption  extends Exception {
+    public UnrealToCreateOption (String msg) {
+        super(msg);
+    }
+}
