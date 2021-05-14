@@ -1,0 +1,7 @@
+package Exceptions;
+
+public class OptionNotFound extends Exception {
+    public OptionNotFound(String msg) {
+        super(msg);
+    }
+}
