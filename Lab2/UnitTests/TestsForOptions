@@ -1,0 +1,111 @@
+package UnitTests;
+import option.*;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Vector;
+
+public class TestsForOptions {
+    @Test
+    public void read() throws Exception {
+        ReadFile readTest = new ReadFile();
+        ArrayList<String> text = new ArrayList<>();
+        ArrayList<String> textRead = new ArrayList<>();
+        Vector<String> words = new Vector<>();
+        text.add("word0");
+        text.add("word1");
+        words.add("src/UnitTests/ReadInput.txt");
+        readTest.execute(textRead, words);
+        assertEquals(text, textRead);
+    }
+    @Test
+    public void write() throws Exception {
+        WriteFile writeTest = new WriteFile();
+        ArrayList<String> text = new ArrayList<>();
+        ArrayList<String> textWrite = new ArrayList<>();
+        Vector<String> words = new Vector<>();
+        text.add("word0");
+        text.add("word1");
+        words.add("src/UnitTests/WriteOut.txt");
+        writeTest.execute(text, words);
+        File file = new File(words.get(0));
+        String line;
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        while(reader.ready()){
+            line = reader.readLine();
+            textWrite .add(line);
+        }
+        reader.close();
+        assertEquals(text, textWrite );
+    }
+
+    @Test
+    public void dump() throws Exception {
+        Dump dumpTest = new Dump();
+        ArrayList<String> text = new ArrayList<>();
+        ArrayList<String> textDump = new ArrayList<>();
+        Vector<String> words = new Vector<>();
+        text.add("word0");
+        text.add("word1");
+        words.add("src/UnitTests/DumpOut.txt");
+        dumpTest.execute(text, words);
+        File file = new File(words.get(0));
+        String line;
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        while (reader.ready()) {
+            line = reader.readLine();
+            textDump.add(line);
+        }
+        reader.close();
+        assertEquals(text, textDump);
+    }
+
+
+    @Test
+    public void sort() throws Exception {
+        Sort sortTest = new Sort();
+        ArrayList<String> text = new ArrayList<>();
+        ArrayList<String> textSort = new ArrayList<>();
+        Vector<String> words = new Vector<>();
+        textSort.add("word1");
+        textSort.add("word0");
+        sortTest.execute(textSort, words);
+        text.add("word0");
+        text.add("word1");
+        assertEquals(text, textSort);
+    }
+
+
+    @Test
+    public void grep() throws Exception {
+        Grep grepTest = new Grep();
+        ArrayList<String> textGrep = new ArrayList<>();
+        Vector<String> words = new Vector<>();
+        textGrep.add("word0");
+        textGrep.add("word1");
+        words.add("word0");
+        ArrayList<String> text = new ArrayList<>(textGrep);
+        text.remove(1);
+        grepTest.execute(textGrep, words);
+        assertEquals(text, textGrep);
+    }
+
+    @Test
+    public void replace() throws Exception {
+        Replace replaceTest = new Replace();
+        ArrayList<String> text = new ArrayList<>();
+        Vector<String> words = new Vector<>();
+        text.add("word0");
+        text.add("word1");
+        words.add("word1");
+        words.add("WORD1");
+        ArrayList<String> textReplace = new ArrayList<>(text);
+        replaceTest.execute(textReplace, words);
+        text.set(1, "WORD1");
+        assertEquals(text, textReplace);
+    }
+}
+
