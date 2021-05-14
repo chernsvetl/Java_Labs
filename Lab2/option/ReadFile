@@ -1,0 +1,35 @@
+package option;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import Exceptions.*;
+
+public class ReadFile implements Option{
+    static Logger logger = Logger.getLogger(Sort.class.getName());
+
+    public void execute(ArrayList<String> text, Vector<String> args) throws Exception {
+        logger.info("Beginning..");
+
+        if (args.size() != 1) {
+            logger.log(Level.WARNING, "Number of arguments for read isn't 1");
+            throw new WrongNumberOfArgs("Number of arguments for read isn't 1");
+        }
+        File filename = new File(args.get(0));
+        String line;
+        BufferedReader reader;
+        reader = new BufferedReader(new FileReader(filename));
+
+        while(reader.ready()){
+            line = reader.readLine();
+            text.add(line);
+        }
+        reader.close();
+        logger.info("Job successful");
+    }
+    public OptionType getType() {
+        return OptionType.IN_TYPE;
+    }
+}
