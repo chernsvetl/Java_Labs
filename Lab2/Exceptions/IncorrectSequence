@@ -1,7 +1,0 @@
-package Exceptions;
-
-public class IncorrectSequence extends Exception {
-    public IncorrectSequence(String msg) {
-        super(msg);
-    }
-}

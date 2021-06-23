@@ -1,7 +1,0 @@
-package option;   
-import java.util.*;
-
-public interface Option {
-    void execute(ArrayList<String> text, Vector<String> arguments) throws Exception;
-    OptionType getType();
-}

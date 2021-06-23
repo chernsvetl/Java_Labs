@@ -1,7 +1,0 @@
-package option;
-
-public enum OptionType {
-    IN_TYPE,
-    OUT_TYPE,
-    IN_OUT_TYPE
-}

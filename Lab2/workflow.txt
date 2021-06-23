@@ -1,6 +1,0 @@
-desc
-1 = readfile src/input.txt
-2 = replace something introduction
-3 = writefile output.txt
-csed
-1 -> 2 -> 3

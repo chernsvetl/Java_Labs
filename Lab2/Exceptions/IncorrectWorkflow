@@ -1,7 +1,0 @@
-package Exceptions;
-
-public class IncorrectWorkflow extends Exception {
-    public IncorrectWorkflow(String msg) {
-        super(msg);
-    }
-}
